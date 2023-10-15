@@ -2,6 +2,8 @@
 
 require 'inflector'
 require 'byebug'
+
+# Bottles class generates verses for the 99 bottles of beer song
 class Bottles
   def initialize; end
 
@@ -9,11 +11,16 @@ class Bottles
     verses(number)
   end
 
-  def verses(*numbers)
-    return '' if numbers.empty?
+  def verses(start, end_num = nil)
+    return generate_verse(start) + generate_line2(start - 1) if end_num.nil?
 
-    number = numbers.first
-    generate_verse(number) + generate_line2(number - 1) + add_new_line(numbers) + verses(*numbers[1..])
+    if start >= end_num
+      generate_verse(start) + generate_line2(start - 1) +
+        add_new_line(start, end_num) +
+        verses(start - 1, end_num)
+    else
+      ''
+    end
   end
 
   private
@@ -24,7 +31,7 @@ class Bottles
       "No more bottles of beer on the wall, no more bottles of beer.\n"
     else
       "#{Inflector.pluralize(number, 'bottle')} of beer on the wall, "\
-      "#{Inflector.pluralize(number, 'bottle')} of beer.\n"
+        "#{Inflector.pluralize(number, 'bottle')} of beer.\n"
     end
   end
 
@@ -44,8 +51,8 @@ class Bottles
     proc(&:negative?)
   end
 
-  def add_new_line(number_of_elements)
-    return "\n" if number_of_elements.count > 1
+  def add_new_line(start, end_num)
+    return "\n" if start > end_num
 
     ''
   end
