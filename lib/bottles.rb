@@ -23,6 +23,10 @@ class Bottles
     end
   end
 
+  def song
+    verses(99, 0)
+  end
+
   private
 
   def generate_verse(number)
