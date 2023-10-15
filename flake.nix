@@ -28,7 +28,7 @@
                   # https://devenv.sh/reference/options/
                   services = {};
 
-                  packages = with pkgs; [ ruby_2_7 ];
+                  packages = with pkgs; [ ruby_2_7 openssl_1_1 ];
 
                   enterShell = ''
                   '';
