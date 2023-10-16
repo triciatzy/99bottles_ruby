@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'inflector'
-require 'byebug'
 
 # Bottles class generates verses for the 99 bottles of beer song
 class Bottles
@@ -14,13 +13,11 @@ class Bottles
   def verses(start, end_num = nil)
     return generate_verse(start) + generate_line2(start - 1) if end_num.nil?
 
-    if start >= end_num
-      generate_verse(start) + generate_line2(start - 1) +
-        add_new_line(start, end_num) +
-        verses(start - 1, end_num)
-    else
-      ''
-    end
+    return '' unless start >= end_num
+
+    generate_verse(start) + generate_line2(start - 1) +
+      add_new_line(start, end_num) +
+      verses(start - 1, end_num)
   end
 
   def song
